@@ -1,169 +1,144 @@
-<!DOCTYPE html>
-<html class="">
-
+<!doctype html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>♥</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
-  <meta name="description" itemprop="description">
-  <meta name="keywords" content="">
-  <style type="text/css"></style>
-  <script>
-    function _loadScript(src) {
-      var s = document.getElementsByTagName('script')[0];
-      var script = document.createElement('script');
+<meta charset="utf-8">
+<title>宝贝加油</title>
+ 
+<style>
+body{
+  overflow: hidden;
+  margin: 0;
+}
+h1{
+  position: fixed;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  transform:translateY(-50%);
+  font-family: 'Love Ya Like A Sister', cursive;
+  font-size: 40px;
+  color: #c70012;
+  padding: 0 20px;
+}
+ 
+@media (min-width:1200px){
+  h1{
+    font-size: 100px;
+  }
+}
 
-      script.type = 'text/javascript';
-      script.async = true;
-      script.src = src;
-      s.parentNode.insertBefore(script, s);
-    }
-  </script>
-
-  <script src="js/three.min.js"></script>
-  <script src="js/TweenMax.min.js"></script>
-  <style id="rendered-css">
-    html,
-    body {
-      margin: 0;
-      overflow: hidden;
-      height: 100%;
-      width: 100%;
-      position: relative;
-      font-family: "Comfortaa", cursive;
-    }
-
-    #container {
-      width: 100%;
-      height: 100%;
-    }
-
-    #container #score {
-      position: absolute;
-      top: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 10vh;
-      transition: transform 0.5s ease;
-      color: #333344;
-      transform: translatey(-200px) scale(1);
-    }
-
-    #container #game {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
-
-    #container .game-over {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 85%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    #container .game-over * {
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      opacity: 0;
-      transform: translatey(-50px);
-      color: #333344;
-    }
-
-    #container .game-over h2 {
-      margin: 0;
-      padding: 0;
-      font-size: 40px;
-    }
-
-    #container .game-ready {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
-    }
-
-    #container .game-ready #start-button {
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      opacity: 0;
-      transform: translatey(-50px);
-      border: 3px solid #333344;
-      padding: 10px 20px;
-      background-color: transparent;
-      color: #333344;
-      font-size: 30px;
-    }
-
-    #container #instructions {
-      position: absolute;
-      width: 100%;
-      top: 16vh;
-      left: 0;
-      text-align: center;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      opacity: 0;
-    }
-
-    #container #instructions.hide {
-      opacity: 0 !important;
-    }
-
-    #container.playing #score,
-    #container.resetting #score {
-      transform: translatey(0px) scale(1);
-    }
-
-    #container.playing #instructions {
-      opacity: 1;
-    }
-
-    #container.ready .game-ready #start-button {
-      opacity: 1;
-      transform: translatey(0);
-    }
-
-    #container.ended #score {
-      transform: translatey(6vh) scale(1.2);
-    }
-
-    #container.ended .game-over * {
-      opacity: 1;
-      transform: translatey(0);
-    }
-
-    #container.ended .game-over p {
-      transition-delay: 0.3s;
-    }
-  </style>
+.img_wrap{
+    height: 1080px;
+    width: 960px;
+    position:absolute;left: 0; top: 0; right: 0; bottom: 0;
+    margin: auto;
+    z-index:1
+}
+</style>
+ 
 </head>
-
 <body>
-  <div id="container">
-    <div id="game"></div>
-    <div id="score">0</div>
-    <div id="instructions">点屏幕就可以啦</div>
-    <div class="game-over">
-      <h3>♥为我的婧婧加油♥</h3>
-      <h3>一个人也要照顾好自己</h3>
-      <h3>等我来哦</h3>
-    </div>
-    <div class="game-ready">
-      <div id="start-button">to李靖</div>
-      <div></div>
-    </div>
-  </div>
-  <script src="js/rendered.js"></script>
-</body>
+ 
+<div class="img_wrap">
+    <img src="qianshuo.jpg" height="960px" width="720px" alt="所爱隔山海，山海皆可平" />
+</div>
 
+<canvas style="position:absolute;z-index:-2;"></canvas>
+<script>
+var canvas = document.querySelector("canvas"),
+  ctx = canvas.getContext("2d");
+ 
+var ww,wh;
+ 
+function onResize(){
+  ww = canvas.width = window.innerWidth;
+  wh = canvas.height = window.innerHeight;
+}
+ 
+ctx.strokeStyle = "red";
+ctx.shadowBlur = 25;
+ctx.shadowColor = "hsla(0, 100%, 60%,0.5)";
+ 
+var precision = 100;
+var hearts = [];
+var mouseMoved = false;
+function onMove(e){
+  mouseMoved = true;
+  if(e.type === "touchmove"){
+    hearts.push(new Heart(e.touches[0].clientX, e.touches[0].clientY));
+    hearts.push(new Heart(e.touches[0].clientX, e.touches[0].clientY));
+  }
+  else{
+    hearts.push(new Heart(e.clientX, e.clientY));
+    hearts.push(new Heart(e.clientX, e.clientY));
+  }
+}
+ 
+var Heart = function(x,y){
+  this.x = x || Math.random()*ww;
+  this.y = y || Math.random()*wh;
+  this.size = Math.random()*2 + 1;
+  this.shadowBlur = Math.random() * 10;
+  this.speedX = (Math.random()+0.2-0.6) * 8;
+  this.speedY = (Math.random()+0.2-0.6) * 8;
+  this.speedSize = Math.random()*0.05 + 0.01;
+  this.opacity = 1;
+  this.vertices = [];
+  for (var i = 0; i < precision; i++) {
+    var step = (i / precision - 0.5) * (Math.PI * 2);
+    var vector = {
+      x : (15 * Math.pow(Math.sin(step), 3)),
+      y : -(13 * Math.cos(step) - 5 * Math.cos(2 * step) - 2 * Math.cos(3 * step) - Math.cos(4 * step)) 
+    }
+    this.vertices.push(vector);
+  }
+}
+ 
+Heart.prototype.draw = function(){
+  this.size -= this.speedSize;
+  this.x += this.speedX;
+  this.y += this.speedY;
+  ctx.save();
+  ctx.translate(-1000,this.y);
+  ctx.scale(this.size, this.size);
+  ctx.beginPath();
+  for (var i = 0; i < precision; i++) {
+    var vector = this.vertices[i];
+    ctx.lineTo(vector.x, vector.y);
+  }
+  ctx.globalAlpha = this.size;
+  ctx.shadowBlur = Math.round((3 - this.size) * 10);
+  ctx.shadowColor = "hsla(0, 100%, 60%,0.5)";
+  ctx.shadowOffsetX = this.x + 1000;
+  ctx.globalCompositeOperation = "screen"
+  ctx.closePath();
+  ctx.fill()
+  ctx.restore();
+};
+ 
+ 
+function render(a){
+  requestAnimationFrame(render);
+  
+  hearts.push(new Heart())
+  ctx.clearRect(0,0,ww,wh);
+  for (var i = 0; i < hearts.length; i++) {
+    hearts[i].draw();
+    if(hearts[i].size <= 0){
+      hearts.splice(i,1);
+      i--;
+    }
+  }
+}
+ 
+ 
+onResize();
+window.addEventListener("mousemove", onMove);
+window.addEventListener("touchmove", onMove);
+window.addEventListener("resize", onResize);
+requestAnimationFrame(render);
+</script>
+ 
+</body>
 </html>
