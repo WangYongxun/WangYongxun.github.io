@@ -1,217 +1,162 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>宝贝加油</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勋与婧</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
 
+        .wrap {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            background-image: url(https://api.dujin.org/bing/1920.php);
+            background-size: cover;
+            background-position: center;
+        }
 
+        .wrap-son {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 1;
+            background: rgba(59, 59, 59, 0.3);
+        }
 
+        .jumbotron {
+            background: rgba(255, 255, 255, 0);
+            color: #f5f5f5;
+        }
+
+        .love {
+            color: #ffffff;
+            margin: 0 20px;
+            line-height: 1.3;
+            font-weight: 300;
+        }
+
+        .hans-container {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            height: 120px;
+            z-index: 1;
+        }
+
+        .timer b {
+            font-size: 100px;
+        }
+
+        #s {
+            font-size: 100px;
+        }
+
+        #updatalove,
+        #to_comments {
+            margin: 0 10px;
+        }
+
+        .copy {
+            position: absolute;
+            bottom: 0;
+            color: #ffffff;
+            font-size: 12px;
+        }
+
+    </style>
 </head>
 
 <body>
+    <div class="wrap">
+        <div class="wrap-son">
+            <div class="container-fluid">
+                <div class="box">
+                    <div class="jumbotron text-center">
+                        <h1>我们相恋了</h1>
+                        <h3 class="timer">
+                            <div class="row">
+                                <b id="d"></b> 天 <b id="h"></b> 时 <b id="m"></b> 分
+                            </div>
+                            <div class="row">
+                                <b id="s"></b> 秒
+                            </div>
+                        </h3>
+                    </div>
+                </div>
 
-  <!-- <div class="img_wrap">
-    <img src="qianshuo.jpg" height="960px" width="720px" alt="所爱隔山海，山海皆可平" />
-  </div> -->
-
-  <div class="box">
-    <div style="background-image: url('img/t1.png');">
+                <div class="row">
+                    <h4 class="love text-center"><span class="love-son"></span></h4>
+                </div>
+                <div id="hans-bolang"></div>
+            </div>
+        </div>
     </div>
-    <div style="background-image: url('img/t2.png');">
-    </div>
-    <div style="background-image: url('img/t3.png');">
-    </div>
-    <div style="background-image: url('img/t4.png');">
-    </div>
-    <div style="background-image: url('img/t5.png');">
-    </div>
-  </div>
 
-  <canvas style="position:absolute;z-index:-2;"></canvas>
 
-  <script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script src="js/jquery-1.11.0.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
-  <script>
-    var canvas = document.querySelector("canvas"),
-      ctx = canvas.getContext("2d");
+    <!-- 计时器 -->
+    <script>
+        function timer() {
+            var start = new Date(2021, 09, 21, 15, 00, 00); // 2020.07.31 13:14:00
+            var t = new Date() - start;
+            var h = ~~(t / 1000 / 60 / 60 % 24);
+            if (h < 10) {
+                h = "0" + h;
+            }
+            var m = ~~(t / 1000 / 60 % 60);
+            if (m < 10) {
+                m = "0" + m;
+            }
 
-    var ww, wh;
-
-    function onResize() {
-      ww = canvas.width = window.innerWidth;
-      wh = canvas.height = window.innerHeight;
-    }
-
-    ctx.strokeStyle = "red";
-    ctx.shadowBlur = 25;
-    ctx.shadowColor = "hsla(0, 100%, 60%,0.5)";
-
-    var precision = 100;
-    var hearts = [];
-    var mouseMoved = false;
-    function onMove(e) {
-      mouseMoved = true;
-      if (e.type === "touchmove") {
-        hearts.push(new Heart(e.touches[0].clientX, e.touches[0].clientY));
-        hearts.push(new Heart(e.touches[0].clientX, e.touches[0].clientY));
-      }
-      else {
-        hearts.push(new Heart(e.clientX, e.clientY));
-        hearts.push(new Heart(e.clientX, e.clientY));
-      }
-    }
-
-    var Heart = function (x, y) {
-      this.x = x || Math.random() * ww;
-      this.y = y || Math.random() * wh;
-      this.size = Math.random() * 2 + 1;
-      this.shadowBlur = Math.random() * 10;
-      this.speedX = (Math.random() + 0.2 - 0.6) * 8;
-      this.speedY = (Math.random() + 0.2 - 0.6) * 8;
-      this.speedSize = Math.random() * 0.05 + 0.01;
-      this.opacity = 1;
-      this.vertices = [];
-      for (var i = 0; i < precision; i++) {
-        var step = (i / precision - 0.5) * (Math.PI * 2);
-        var vector = {
-          x: (15 * Math.pow(Math.sin(step), 3)),
-          y: -(13 * Math.cos(step) - 5 * Math.cos(2 * step) - 2 * Math.cos(3 * step) - Math.cos(4 * step))
+            var s = ~~(t / 1000 % 60);
+            if (s < 10) {
+                s = "0" + s;
+            }
+            document.getElementById('d').innerHTML = ~~(t / 1000 / 60 / 60 / 24);
+            document.getElementById('h').innerHTML = h;
+            document.getElementById('m').innerHTML = m;
+            document.getElementById('s').innerHTML = s;
         }
-        this.vertices.push(vector);
-      }
-    }
+        timer();
+        setInterval(timer, 1000);
+    </script>
 
-    Heart.prototype.draw = function () {
-      this.size -= this.speedSize;
-      this.x += this.speedX;
-      this.y += this.speedY;
-      ctx.save();
-      ctx.translate(-1000, this.y);
-      ctx.scale(this.size, this.size);
-      ctx.beginPath();
-      for (var i = 0; i < precision; i++) {
-        var vector = this.vertices[i];
-        ctx.lineTo(vector.x, vector.y);
-      }
-      ctx.globalAlpha = this.size;
-      ctx.shadowBlur = Math.round((3 - this.size) * 10);
-      ctx.shadowColor = "hsla(0, 100%, 60%,0.5)";
-      ctx.shadowOffsetX = this.x + 1000;
-      ctx.globalCompositeOperation = "screen"
-      ctx.closePath();
-      ctx.fill()
-      ctx.restore();
-    };
-
-
-    function render(a) {
-      requestAnimationFrame(render);
-
-      hearts.push(new Heart())
-      ctx.clearRect(0, 0, ww, wh);
-      for (var i = 0; i < hearts.length; i++) {
-        hearts[i].draw();
-        if (hearts[i].size <= 0) {
-          hearts.splice(i, 1);
-          i--;
+    <script>
+        var oComments = document.querySelector("#comments");
+        var oCommentsTop = Math.round(oComments.offsetTop);
+        //运动框架
+        function move() {
+            // 1. 关闭开启定时器;
+            clearInterval(timer);
+            var timer = setInterval(function () {
+                // 2. 计算速度;
+                var iNow = document.documentElement.scrollTop || document.body.scrollTop; //100
+                iNow = Math.round(iNow);
+                var speed = (oCommentsTop - iNow) / 10;
+                // 3. 速度取整;
+                if (speed > 0) {
+                    speed = Math.ceil(speed);
+                } else {
+                    speed = Math.floor(speed);
+                }
+                document.documentElement.scrollTop = document.body.scrollTop = iNow + speed + 1;
+                // 4. 终止条件;
+                if (iNow >= oCommentsTop) {
+                    clearInterval(timer);
+                }
+            }, 20)
         }
-      }
-    }
 
-
-    onResize();
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("touchmove", onMove);
-    window.addEventListener("resize", onResize);
-    requestAnimationFrame(render);
-
-
-
-    $(".box>div").mouseover(function () {
-      $(this).stop().animate({
-        "width": "1080px"
-      }, 200).siblings().stop().animate({
-        "width": "200px"
-      }, 200)
-    })
-
-    $(".box>div").mouseout(function () {
-      $(".box>div").stop().animate({
-        "width": "200px"
-      }, 200)
-    })
-
-
-  </script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    .box {
-      position: fixed;
-      z-index: 1;
-      width: 2000px;
-      height: 1000px;
-      /* border: 10px solid #151515; */
-      left: 20%;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      /* background-color: #151515; */
-      border-right: 0;
-    }
-
-    .box>div {
-      width: 200px;
-      height: 1000px;
-      opacity: .3;
-      float: left;
-      background: url("img/t1.png") no-repeat center center;
-      transition: all .7s ease 0s;
-    }
-
-    .box>div:hover {
-
-      opacity: 1;
-
-    }
-
-    .box>div h1 {
-      color: #fff;
-      font-size: 70px;
-      padding: 40px 40px 0;
-    }
-
-    body {
-      overflow: hidden;
-      margin: 0;
-    }
-
-    h1 {
-      position: fixed;
-      top: 40%;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      transform: translateY(-50%);
-      font-family: 'Love Ya Like A Sister', cursive;
-      font-size: 40px;
-      color: #c70012;
-      padding: 0 20px;
-    }
-
-    @media (min-width:1200px) {
-      h1 {
-        font-size: 100px;
-      }
-    }
-  </style>
-
+        to_comments.onclick = move;
+    </script>
 </body>
 
 </html>
