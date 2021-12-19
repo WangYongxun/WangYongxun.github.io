@@ -16,7 +16,7 @@
             position: relative;
             height: 100%;
             width: 100%;
-            background-image: url(https://api.dujin.org/bing/m.php);
+            background-image: url();
             background-size: cover;
             background-position: center;
         }
@@ -68,95 +68,82 @@
             color: #ffffff;
             font-size: 12px;
         }
-
     </style>
 </head>
 
-<body>
-    <div class="wrap">
-        <div class="wrap-son">
-            <div class="container-fluid">
-                <div class="box">
-                    <div class="jumbotron text-center">
-                        <h1>我们相恋了</h1>
-                        <h3 class="timer">
-                            <div class="row">
-                                <b id="d"></b> 天 <b id="h"></b> 时 <b id="m"></b> 分
-                            </div>
-                            <div class="row">
-                                <b id="s"></b> 秒
-                            </div>
-                        </h3>
-                    </div>
+<div class="wrap">
+    <div class="wrap-son">
+        <div class="container-fluid">
+            <div class="box">
+                <div class="jumbotron text-center">
+                    <h1>我们相恋了</h1>
+                    <h3 class="timer">
+                        <div class="row">
+                            <b id="d"></b> 天 <b id="h"></b> 时 <b id="m"></b> 分
+                        </div>
+                        <div class="row">
+                            <b id="s"></b> 秒
+                        </div>
+                    </h3>
                 </div>
-
-                <div class="row">
-                    <h4 class="love text-center"><span class="love-son"></span></h4>
-                </div>
-                <div id="hans-bolang"></div>
             </div>
+
+            <div class="row">
+                <h4 class="love text-center"><span class="love-son"></span></h4>
+            </div>
+            <div id="hans-bolang"></div>
         </div>
     </div>
+</div>
 
-
-    <script src="js/jquery-1.11.0.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- 计时器 -->
-    <script>
-        function timer() {
-            var start = new Date(2021, 08, 21, 15, 00, 00); // 2020.07.31 13:14:00
-            var t = new Date() - start;
-            var h = ~~(t / 1000 / 60 / 60 % 24);
-            if (h < 10) {
-                h = "0" + h;
-            }
-            var m = ~~(t / 1000 / 60 % 60);
-            if (m < 10) {
-                m = "0" + m;
-            }
-
-            var s = ~~(t / 1000 % 60);
-            if (s < 10) {
-                s = "0" + s;
-            }
-            document.getElementById('d').innerHTML = ~~(t / 1000 / 60 / 60 / 24);
-            document.getElementById('h').innerHTML = h;
-            document.getElementById('m').innerHTML = m;
-            document.getElementById('s').innerHTML = s;
+<!-- 计时器 -->
+<script>
+    function timer() {
+        var start = new Date(2021, 09, 21, 15, 00, 00); // 2020.07.31 13:14:00
+        var t = new Date() - start;
+        var h = ~~(t / 1000 / 60 / 60 % 24);
+        if (h < 10) {
+            h = "0" + h;
         }
-        timer();
-        setInterval(timer, 1000);
-    </script>
-
-    <script>
-        var oComments = document.querySelector("#comments");
-        var oCommentsTop = Math.round(oComments.offsetTop);
-        //运动框架
-        function move() {
-            // 1. 关闭开启定时器;
-            clearInterval(timer);
-            var timer = setInterval(function () {
-                // 2. 计算速度;
-                var iNow = document.documentElement.scrollTop || document.body.scrollTop; //100
-                iNow = Math.round(iNow);
-                var speed = (oCommentsTop - iNow) / 10;
-                // 3. 速度取整;
-                if (speed > 0) {
-                    speed = Math.ceil(speed);
-                } else {
-                    speed = Math.floor(speed);
-                }
-                document.documentElement.scrollTop = document.body.scrollTop = iNow + speed + 1;
-                // 4. 终止条件;
-                if (iNow >= oCommentsTop) {
-                    clearInterval(timer);
-                }
-            }, 20)
+        var m = ~~(t / 1000 / 60 % 60);
+        if (m < 10) {
+            m = "0" + m;
         }
 
-        to_comments.onclick = move;
-    </script>
+        var s = ~~(t / 1000 % 60);
+        if (s < 10) {
+            s = "0" + s;
+        }
+        document.getElementById('d').innerHTML = ~~(t / 1000 / 60 / 60 / 24);
+        document.getElementById('h').innerHTML = h;
+        document.getElementById('m').innerHTML = m;
+        document.getElementById('s').innerHTML = s;
+    }
+    timer();
+    setInterval(timer, 1000);
+</script>
+<script>
+    function bgimg() {
+                
+        const url = 'http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=3';
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.open('GET', url, true);
+        httpRequest.send();
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                const finalUrl = "https://cn.bing.com"+json.images[0].url;
+                document.body.style.backgroundImage="url(" + finalUrl + ")";                    
+            }
+        };
+
+        
+
+    }
+    bgimg();
+</script>
+
+
 </body>
 
 </html>
