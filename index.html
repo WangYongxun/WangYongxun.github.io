@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>勋与婧</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="./js/jquery-1.8.2.min.js"></script>
+	<script src="./js/jq.snow.js"></script>
     <style>
         html,
         body {
@@ -87,7 +89,6 @@
                     </h3>
                 </div>
             </div>
-
             <div class="row">
                 <h4 class="love text-center"><span class="love-son"></span></h4>
             </div>
@@ -123,21 +124,13 @@
     setInterval(timer, 1000);
 </script>
 <script>
-    // function bgimg() {
-    //     const url = 'http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=3';
-    //     var httpRequest = new XMLHttpRequest();
-    //     httpRequest.open('GET', url, true);
-    //     httpRequest.send();
-    //     httpRequest.onreadystatechange = function () {
-    //         if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-    //             console.log("asdasd")
-    //             var json = httpRequest.responseText;
-    //             const finalUrl = "https://cn.bing.com" + json.images[0].url;
-    //             document.body.style.backgroundImage = "url(" + finalUrl + ")";
-    //         }
-    //     };
-    // }
-    // bgimg();
-</script>
+	$(function(){
+		$.fn.snow({ 
+			minSize: 5,		//雪花的最小尺寸
+			maxSize: 40, 	//雪花的最大尺寸
+			newOn: 200	//雪花出现的频率 这个数值越小雪花越多
+		});
+	});
+	</script>
 </body>
 </html>
