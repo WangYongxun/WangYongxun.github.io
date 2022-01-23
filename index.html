@@ -7,9 +7,6 @@
     <title>勋与婧</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="./js/jquery-1.8.2.min.js"></script>
-
-
-
     <style>
         html,
         body {
@@ -41,6 +38,10 @@
 </head>
 
 <div class="wrap">
+    <div style="width: 200px;">
+        <div id="he-plugin-simple"></div>
+    </div>
+    
     <canvas id="canvas" class="can" style=" position:absolute; height: 100%; width: 100%; z-index: 5;"></canvas>
     <div class="jumbotron text-center">
         <h1>我们相恋了</h1>
@@ -144,6 +145,33 @@
     //每毫秒刷新一次
 	setInterval(draw,1)
 	</script>
+
+
+<script>
+    WIDGET = {
+      "CONFIG": {
+        "modules": "01234",
+        "background": "1",
+        "tmpColor": "FFFFFF",
+        "tmpSize": "16",
+        "cityColor": "FFFFFF",
+        "citySize": "16",
+        "aqiColor": "FFFFFF",
+        "aqiSize": "16",
+        "weatherIconSize": "24",
+        "alertIconSize": "18",
+        "padding": "10px 10px 10px 10px",
+        "shadow": "0",
+        "language": "auto",
+        "borderRadius": "0",
+        "fixed": "false",
+        "vertical": "center",
+        "horizontal": "center",
+        "key": "dffe64bd08384046a9ca55f001b88e0d"
+      }
+    }
+    </script>
+    <script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
 </body>
 
 </html>
